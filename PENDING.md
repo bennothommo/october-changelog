@@ -35,14 +35,14 @@
 
 We would like to thank the following people for their contributions to this release:
 
-- @bennothommo
-- @daftspunk
-- @gergo85
-- @LarBearrr
-- @LukeTowers
-- @mariavilaro
-- @mjauvin
-- @panakour
-- @SebastiaanKloos
-- @VoroninWD
-- @w20k
+- **@bennothommo**
+- **@daftspunk**
+- **@gergo85**
+- **@LarBearrr**
+- **@LukeTowers**
+- **@mariavilaro**
+- **@mjauvin**
+- **@panakour**
+- **@SebastiaanKloos**
+- **@VoroninWD**
+- **@w20k**
