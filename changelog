@@ -1,0 +1,240 @@
+#!/usr/bin/env php
+<?php
+require_once './Cli.php';
+require_once './GithubApi.php';
+require_once './Changelog.php';
+
+use October\Changelog\Cli as CLI;
+use October\Changelog\GithubApi as API;
+use October\Changelog\Changelog;
+
+define('API_USERNAME', $_SERVER['API_USERNAME'] ?? $_ENV['API_USERNAME'] ?? null);
+define('API_TOKEN', $_SERVER['API_TOKEN'] ?? $_ENV['API_TOKEN'] ?? null);
+define('OCTOBER_CMS_REPO', 'octobercms/october');
+define('OCTOBER_LIBRARY_REPO', 'octobercms/library');
+define('CHANGELOG_REPO', 'bennothommo/october-changelog');
+
+if (empty(API_USERNAME) || empty(API_TOKEN)) {
+    CLI::error('Environment variables API_USERNAME and API_TOKEN are both required to use this tool.');
+}
+
+$cmsApi = new API;
+$cmsApi
+    ->setApiUsername(API_USERNAME)
+    ->setApiToken(API_TOKEN)
+    ->setRepo(OCTOBER_CMS_REPO);
+
+$libraryApi = new API;
+$libraryApi
+    ->setApiUsername(API_USERNAME)
+    ->setApiToken(API_TOKEN)
+    ->setRepo(OCTOBER_LIBRARY_REPO);
+
+$pending = [
+    'october' => [],
+    'library' => [],
+];
+
+// COLLATE PENDING COMMITS IN OCTOBER CMS REPO
+CLI::out('### Collate all pending commits in main October CMS repo.', 2);
+
+// Get latest tag and commit from October by getting the list of tags and using the first (most recent) tag
+CLI::out('Getting latest tag for October CMS...');
+try {
+    $recentTag = $cmsApi->getRecentTag();
+} catch (\Exception $e) {
+    CLI::error('Unable to get latest tag: ' . $e->getMessage());
+}
+CLI::overwrite('Done - found ' . $recentTag['name'] . ' (' . substr($recentTag['commit']['sha'], 0, 8) . ').');
+
+// Get details of that commit to find the start date for more recent commits
+CLI::out('Finding start date for commits...');
+try {
+    $startDate = $cmsApi->getCommitDate($recentTag['commit']['sha']);
+} catch (\Exception $e) {
+    CLI::error('Unable to determine start date for commits.');
+}
+CLI::overwrite('Done - found ' . $startDate->format('c') . '.');
+
+// Retrieve all commits to "develop" branch since the start date
+CLI::out('Get all commits to October CMS "develop" branch since start date...');
+try {
+    $collated = $cmsApi->getCommitsToBranch('develop', $startDate);
+} catch (\Exception $e) {
+    CLI::error('Unable to get all commits. ' . $e->getMessage());
+}
+if (!count($collated)) {
+    CLI::overwrite('Done - no commits found since last tag.');
+} else {
+    CLI::overwrite('Done - found ' . count($collated) . ' commit(s).');
+}
+
+// Determine PRs for each commit
+CLI::out('Find linked PRs to those commits...');
+try {
+    $collated = $cmsApi->getLinkedPullRequests($collated);
+} catch (\Exception $e) {
+    CLI::error('Unable to get linked pull requests. ' . $e->getMessage());
+}
+if (!count($collated)) {
+    CLI::error('Unable to determine pull requests for commits.');
+} else {
+    CLI::overwrite('Done.');
+}
+
+// Add collated commits to pending storage
+$pending['october'] = $collated;
+
+// COLLATE PENDING COMMITS IN OCTOBER LIBRARY REPO
+CLI::out();
+CLI::out('### Collate all pending commits in October Rain Library repo.', 2);
+
+// Get latest tag and commit from October by getting the list of tags and using the first (most recent) tag
+CLI::out('Getting latest tag for October Rain Library...');
+try {
+    $recentTag = $libraryApi->getRecentTag();
+} catch (\Exception $e) {
+    CLI::error('Unable to get latest tag: ' . $e->getMessage());
+}
+CLI::overwrite('Done - found ' . $recentTag['name'] . ' (' . substr($recentTag['commit']['sha'], 0, 8) . ').');
+
+// Get details of that commit to find the start date for more recent commits
+CLI::out('Finding start date for commits...');
+try {
+    $startDate = $libraryApi->getCommitDate($recentTag['commit']['sha']);
+} catch (\Exception $e) {
+    CLI::error('Unable to determine start date for commits.');
+}
+CLI::overwrite('Done - found ' . $startDate->format('c') . '.');
+
+// Retrieve all commits to "develop" branch since the start date
+CLI::out('Get all commits to October CMS "develop" branch since start date...');
+try {
+    $collated = $libraryApi->getCommitsToBranch('develop', $startDate);
+} catch (\Exception $e) {
+    CLI::error('Unable to get all commits. ' . $e->getMessage());
+}
+if (!count($collated)) {
+    CLI::overwrite('Done - no commits found since last tag.');
+} else {
+    CLI::overwrite('Done - found ' . count($collated) . ' commit(s).');
+}
+
+// Determine PRs for each commit
+CLI::out('Find linked PRs to those commits...');
+try {
+    $collated = $libraryApi->getLinkedPullRequests($collated);
+} catch (\Exception $e) {
+    CLI::error('Unable to get linked pull requests. ' . $e->getMessage());
+}
+if (!count($collated)) {
+    CLI::error('Unable to determine pull requests for commits.');
+} else {
+    CLI::overwrite('Done.');
+}
+
+// Add collated commits to pending storage
+$pending['library'] = $collated;
+
+// GENERATE CHANGELOG
+CLI::out();
+CLI::out('### Generate changelog', 2);
+
+// Clean up collated commits
+CLI::out('Clean up collated commit messages...');
+foreach ($pending as $repo => &$commits) {
+    foreach ($commits as &$commit) {
+        // Save original message before cleanup
+        $commit['originalMessage'] = $commit['message'];
+
+        // Check if PR is in message (usually as "... (#123)")
+        if (preg_match('/^(.*?)\s\(#([1-9][0-9]*)\)/', $commit['message'], $matches)) {
+            $mainPr = $matches[2];
+            $commit['message'] = $matches[1];
+
+            if (in_array($mainPr, $commit['pulls'])) {
+                $commit['pulls'] = [
+                    $mainPr
+                ];
+            }
+        }
+
+        // Remove merged branch messages unless they are a single line commit
+        if (preg_match('/^Merge[d]*\sbranch/i', $commit['message'])) {
+            $parts = preg_split('/[\n|\r|\r\n]+/', $commit['message'], 2, PREG_SPLIT_NO_EMPTY);
+            if (count($parts) === 2) {
+                $commit['message'] = $parts[1];
+            }
+        }
+
+        // Remove merged pull request messages unless they are a single line commit
+        if (preg_match('/^Merge[d]*\spull\s(request\s)*(#)*([1-9][0-9]*)/i', $commit['message'], $matches)) {
+            $mainPr = $matches[3];
+            $parts = preg_split('/[\n|\r|\r\n]+/', $commit['message'], 2, PREG_SPLIT_NO_EMPTY);
+            if (count($parts) === 2) {
+                $commit['message'] = $parts[1];
+            }
+
+            if (in_array($mainPr, $commit['pulls'])) {
+                $commit['pulls'] = [
+                    $mainPr
+                ];
+            }
+        }
+
+        // Only use first summary line of commit message
+        if (preg_match('/[\n|\r|\r\n]/', $commit['message'])) {
+            $parts = preg_split('/[\n|\r|\r\n]+/', $commit['message'], 2, PREG_SPLIT_NO_EMPTY);
+            foreach ($parts as $part) {
+                $part = trim($part);
+                if (!empty($part)) {
+                    $commit['message'] = $part;
+                    break;
+                }
+            }
+        }
+
+        // Remove references and fixes messages
+        if (preg_match('/(Ref(s)*|Relate(d)*|Fixes*):\s+([^\s]+)(\,\s*([^\s]+))*?$/i', $commit['message'])) {
+            $commit['message'] = preg_replace(
+                '/(Ref(s)*|Relate(d)*|Fixes*):\s+([^\s]+)(\,\s*([^\s]+))*?$/i',
+                '',
+                $commit['message']
+            );
+        }
+    }
+}
+CLI::overwrite('Done.');
+
+// Generate Markdown document
+CLI::out('Generate changelog...');
+$changelog = new Changelog($pending);
+$markdown = $changelog->render();
+CLI::overwrite('Done.');
+
+// Check if PENDING.md file exists
+CLI::out('Check if PENDING.md file exists...');
+$pendingApi = new API;
+$pendingApi
+    ->setApiUsername(API_USERNAME)
+    ->setApiToken(API_TOKEN)
+    ->setRepo(CHANGELOG_REPO);
+try {
+    $file = $pendingApi->getPendingFile();
+} catch (\Exception $e) {
+    CLI::error('Unable to get PENDING.md file. ' . $e->getMessage());
+}
+if (!$file) {
+    CLI::overwrite('Done. No file found.');
+} else {
+    CLI::overwrite('Done. Found file SHA ' . $file);
+}
+
+// Write to PENDING.md
+CLI::out('Write new changelog to PENDING.md...');
+try {
+    $file = $pendingApi->replacePendingFile($markdown, $file);
+} catch (\Exception $e) {
+    CLI::error('Unable to write to PENDING.md file. ' . $e->getMessage());
+}
+CLI::overwrite('Done.');
