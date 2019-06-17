@@ -81,42 +81,21 @@ class Changelog
             $content .= "\n\n";
             $content .= '## Enhancements and New Features';
 
-            foreach ($enhancements as $enhancement) {
-                $content .= "\n" . '- ' . $enhancement['message'];
-                if (count($enhancement['pulls'])) {
-                    $content .= ' (' . $this->renderPRLink($enhancement['type'], $enhancement['pulls'][0]) . ')';
-                } else {
-                    $content .= ' (' . $this->renderShaLink($enhancement['type'], $enhancement['sha']) . ')';
-                }
-            }
+            $content .= $this->renderChanges($enhancements);
         }
 
         if (count($maintenance)) {
             $content .= "\n\n";
             $content .= '## API and Feature Changes';
 
-            foreach ($maintenance as $maintenance) {
-                $content .= "\n" . '- ' . $maintenance['message'];
-                if (count($maintenance['pulls'])) {
-                    $content .= ' (' . $this->renderPRLink($maintenance['type'], $maintenance['pulls'][0]) . ')';
-                } else {
-                    $content .= ' (' . $this->renderShaLink($maintenance['type'], $maintenance['sha']) . ')';
-                }
-            }
+            $content .= $this->renderChanges($maintenance);
         }
 
         if (count($bugs)) {
             $content .= "\n\n";
             $content .= '## Bug fixes';
 
-            foreach ($bugs as $bug) {
-                $content .= "\n" . '- ' . $bug['message'];
-                if (count($bug['pulls'])) {
-                    $content .= ' (' . $this->renderPRLink($bug['type'], $bug['pulls'][0]) . ')';
-                } else {
-                    $content .= ' (' . $this->renderShaLink($bug['type'], $bug['sha']) . ')';
-                }
-            }
+            $content .= $this->renderChanges($bugs);
         }
 
         return $content;
@@ -131,16 +110,16 @@ class Changelog
         $content = "\n\n";
         $content .= '## Other changes';
 
+        // Add section to commits
+        $otherCommits = [];
         foreach ($commits as $section => $sectionCommits) {
             foreach ($sectionCommits as $i => $commit) {
-                $content .= "\n" . '- ' . $commit['message'];
-                if (count($commit['pulls'])) {
-                    $content .= ' (' . $this->renderPRLink($section, $commit['pulls'][0]) . ')';
-                } else {
-                    $content .= ' (' . $this->renderShaLink($section, $commit['sha']) . ')';
-                }
+                $commit['type'] = $section;
+                $otherCommits[] = $commit;
             }
         }
+
+        $content .= $this->renderChanges($otherCommits);
 
         return $content;
     }
@@ -197,6 +176,26 @@ class Changelog
             $content .= 'https://github.com/octobercms/library/commit/' . $sha;
         }
         $content .= ')';
+
+        return $content;
+    }
+
+    protected function renderChanges(array $changes): string
+    {
+        if (!count($changes)) {
+            return '';
+        }
+
+        $content = '';
+
+        foreach ($changes as $change) {
+            $content .= "\n" . '- ' . $change['message'];
+            if (count($change['pulls'])) {
+                $content .= ' (' . $this->renderPRLink($change['type'], $change['pulls'][0]) . ')';
+            } else {
+                $content .= ' (' . $this->renderShaLink($change['type'], $change['sha']) . ')';
+            }
+        }
 
         return $content;
     }
