@@ -1,0 +1,11 @@
+language: php
+
+php:
+  - 7.2
+
+sudo: false
+
+jobs:
+  include:
+    - stage: "Changelog"
+      script: ./changelog
