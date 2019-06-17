@@ -1,6 +1,7 @@
 # Pending changes for release
 
 ## Enhancements and New Features
+- Add new Performance API's to October CMS ([october#4285](https://github.com/octobercms/october/pull/4285))
 - Store limited list widget configuration in user preferences ([october#4360](https://github.com/octobercms/october/pull/4360))
 - Use temporaryUrls for protected files if the storage driver supports them.  ([october#4358](https://github.com/octobercms/october/pull/4358))
 - Database layer for the CMS objects ([october#3908](https://github.com/octobercms/october/pull/3908))
@@ -35,6 +36,7 @@
 
 We would like to thank the following people for their contributions to this release:
 
+- **@ayumihamsaki**
 - **@bennothommo**
 - **@daftspunk**
 - **@gergo85**
