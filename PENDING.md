@@ -28,6 +28,9 @@
 - Improve Halcyon model AddDynamicPoperty test ([library#408](https://github.com/octobercms/library/pull/408))
 - Various improvements to File handling logic.  ([library#406](https://github.com/octobercms/library/pull/406))
 
+## Bug fixes
+- Improve support for protected files on S3 ([october#4390](https://github.com/octobercms/october/pull/4390))
+
 ## Other changes
 - minor code cleanup ([library@`3e6f66cf`](https://github.com/octobercms/library/commit/3e6f66cfafe9d09f45594cda87744531b410386d))
 - Improve error message when not using directories in custom Halcyon models. ([library@`0b50bb4e`](https://github.com/octobercms/library/commit/0b50bb4ef6f2294def6f9191808f16a95effacc0))
@@ -40,6 +43,7 @@ We would like to thank the following people for their contributions to this rele
 - **@ayumihamsaki**
 - **@bennothommo**
 - **@daftspunk**
+- **@fansaien**
 - **@gergo85**
 - **@LarBearrr**
 - **@LukeTowers**
