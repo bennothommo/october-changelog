@@ -32,6 +32,7 @@
 - Improve support for protected files on S3 ([october#4390](https://github.com/octobercms/october/pull/4390))
 
 ## Other changes
+- Retain support for PHP < 7.3, fixes #4405 ([october@`ae7da9f9`](https://github.com/octobercms/october/commit/ae7da9f9578ad67bd9f6358126c796a773da965a))
 - Typo fix ([october@`a1b10180`](https://github.com/octobercms/october/commit/a1b101808356b431069b2dd5168bd9eeb51104d9))
 - minor code cleanup ([library@`3e6f66cf`](https://github.com/octobercms/library/commit/3e6f66cfafe9d09f45594cda87744531b410386d))
 - Improve error message when not using directories in custom Halcyon models. ([library@`0b50bb4e`](https://github.com/octobercms/library/commit/0b50bb4ef6f2294def6f9191808f16a95effacc0))
