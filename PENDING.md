@@ -29,6 +29,7 @@
 - Fix menus not being displayed with database templates ([october#4362](https://github.com/octobercms/october/pull/4362))
 
 ## Other changes
+- Add exceptions to PHPCS as per developer guide ([october@`53a82522`](https://github.com/octobercms/october/commit/53a825222d190040c9efb04d47336ce82ed5ba1c))
 - Fix code coverage test for single commits ([october@`8d02c5e9`](https://github.com/octobercms/october/commit/8d02c5e935626d525530d3da70f6df34d1f20bfa))
 - Retain support for PHP < 7.3, fixes #4405 ([october@`ae7da9f9`](https://github.com/octobercms/october/commit/ae7da9f9578ad67bd9f6358126c796a773da965a))
 - Typo fix ([october@`a1b10180`](https://github.com/octobercms/october/commit/a1b101808356b431069b2dd5168bd9eeb51104d9))
