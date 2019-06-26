@@ -8,6 +8,7 @@
 - Halcyon DbDatasource ([library#356](https://github.com/octobercms/library/pull/356))
 
 ## API and Feature Changes
+- Block off SW running in backend and reduce lookups ([october#4385](https://github.com/octobercms/october/pull/4385))
 - Fix Travis CI file scope ([october#4408](https://github.com/octobercms/october/pull/4408))
 - Improve Travis CI build process ([october#4394](https://github.com/octobercms/october/pull/4394))
 - Fix FormData initialization ([october#4391](https://github.com/octobercms/october/pull/4391))
