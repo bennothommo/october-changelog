@@ -8,6 +8,8 @@
 - Halcyon DbDatasource ([library#356](https://github.com/octobercms/library/pull/356))
 
 ## API and Feature Changes
+- Add additional test cases for PluginManager ([october#4427](https://github.com/octobercms/october/pull/4427))
+- Fix support for custom Select2 options via the AJAX framework ([october#4414](https://github.com/octobercms/october/pull/4414))
 - Clean up index functionality in Repeater widget ([october#4424](https://github.com/octobercms/october/pull/4424))
 - Improved Brazilian Portuguese translation ([october#4415](https://github.com/octobercms/october/pull/4415))
 - Block off SW running in backend and reduce lookups ([october#4385](https://github.com/octobercms/october/pull/4385))
@@ -52,6 +54,7 @@ We would like to thank the following people for their contributions to this rele
 - **@ayumihamsaki**
 - **@bennothommo**
 - **@daftspunk**
+- **@DanHarrin**
 - **@fansaien**
 - **@gergo85**
 - **@LarBearrr**
