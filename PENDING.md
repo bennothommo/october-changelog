@@ -8,6 +8,7 @@
 - Halcyon DbDatasource ([library#356](https://github.com/octobercms/library/pull/356))
 
 ## API and Feature Changes
+- Make plugin dependency checks case-insensitive ([october#4337](https://github.com/octobercms/october/pull/4337))
 - Add additional test cases for PluginManager ([october#4427](https://github.com/octobercms/october/pull/4427))
 - Fix support for custom Select2 options via the AJAX framework ([october#4414](https://github.com/octobercms/october/pull/4414))
 - Clean up index functionality in Repeater widget ([october#4424](https://github.com/octobercms/october/pull/4424))
@@ -65,5 +66,6 @@ We would like to thank the following people for their contributions to this rele
 - **@prhost**
 - **@Rike-cz**
 - **@SebastiaanKloos**
+- **@tobias-kuendig**
 - **@VoroninWD**
 - **@w20k**
