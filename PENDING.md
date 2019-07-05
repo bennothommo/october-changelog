@@ -31,6 +31,7 @@
 - Various improvements to File handling logic.  ([library#406](https://github.com/octobercms/library/pull/406))
 
 ## Bug fixes
+- Fix selection issue for similar-named CMS objects ([october#4433](https://github.com/octobercms/october/pull/4433))
 - Improve support for protected files on S3 ([october#4390](https://github.com/octobercms/october/pull/4390))
 - Fix menus not being displayed with database templates ([october#4362](https://github.com/octobercms/october/pull/4362))
 
@@ -69,3 +70,4 @@ We would like to thank the following people for their contributions to this rele
 - **@tobias-kuendig**
 - **@VoroninWD**
 - **@w20k**
+- **@wenlong-date**
