@@ -4,6 +4,7 @@
 - Halcyon DbDatasource ([library#356](https://github.com/octobercms/library/pull/356))
 
 ## API and Feature Changes
+- Accessibility enhancement for code editor icons ([october#4395](https://github.com/octobercms/october/pull/4395))
 - Fix selection issue for similar-named CMS objects ([october#4433](https://github.com/octobercms/october/pull/4433))
 - Make plugin dependency checks case-insensitive ([october#4337](https://github.com/octobercms/october/pull/4337))
 - Add additional test cases for PluginManager ([october#4427](https://github.com/octobercms/october/pull/4427))
