@@ -39,11 +39,14 @@
 - Use temporaryUrls for protected files if the storage driver supports them.  ([october#4358](https://github.com/octobercms/october/pull/4358))
 - Compile rich editor with inline style and class ([october#4434](https://github.com/octobercms/october/pull/4434))
 - Database layer for the CMS objects ([october#3908](https://github.com/octobercms/october/pull/3908))
+- Fix: Don't minify css rules inside parentheses ([library#411](https://github.com/octobercms/library/pull/411))
+- Don't minify css rules inside parentheses ([library#411](https://github.com/octobercms/library/pull/411))
 - Prevent double decoding of jsonable attributes ([library#405](https://github.com/octobercms/library/pull/405))
 - Improve Halcyon model AddDynamicPoperty test ([library#408](https://github.com/octobercms/library/pull/408))
 - Various improvements to File handling logic.  ([library#406](https://github.com/octobercms/library/pull/406))
 
 ## Other changes
+- Disable theme config cache when debug mode enabled ([october@`6f583b39`](https://github.com/octobercms/october/commit/6f583b392077e31fbdd7566634ec65515bfbc98a))
 - Fix code quality errors in Lists widget ([october@`be2a8507`](https://github.com/octobercms/october/commit/be2a850787d5564445b3c946f20415e0ab22b208))
 - Increment column count when tree is shown ([october@`c1dcc625`](https://github.com/octobercms/october/commit/c1dcc6255914d3fd216165579e0a067d6f816803))
 - minor code cleanup ([library@`3e6f66cf`](https://github.com/octobercms/library/commit/3e6f66cfafe9d09f45594cda87744531b410386d))
