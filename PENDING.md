@@ -39,6 +39,7 @@
 - Use temporaryUrls for protected files if the storage driver supports them.  ([october#4358](https://github.com/octobercms/october/pull/4358))
 - Compile rich editor with inline style and class ([october#4434](https://github.com/octobercms/october/pull/4434))
 - Database layer for the CMS objects ([october#3908](https://github.com/octobercms/october/pull/3908))
+- Fixed support for Auth::id() ([library#412](https://github.com/octobercms/library/pull/412))
 - Fix: Don't minify css rules inside parentheses ([library#411](https://github.com/octobercms/library/pull/411))
 - Don't minify css rules inside parentheses ([library#411](https://github.com/octobercms/library/pull/411))
 - Prevent double decoding of jsonable attributes ([library#405](https://github.com/octobercms/library/pull/405))
@@ -46,6 +47,10 @@
 - Various improvements to File handling logic.  ([library#406](https://github.com/octobercms/library/pull/406))
 
 ## Other changes
+- Fix typo ([october@`7782e04e`](https://github.com/octobercms/october/commit/7782e04ef8267d366c2ad0e30398ce58bc0cd400))
+- Disable searching and sorting on any_template ([october@`e0e951df`](https://github.com/octobercms/october/commit/e0e951dfcd4ee3b1b7b40546f7f4fe3d7dfb994e))
+- Remove support for invalid relation type column ([october@`029a2998`](https://github.com/octobercms/october/commit/029a299816f7a726c9eeb4adb70fd18d1db4f533))
+- Only attempt to translate string values ([october@`f9f337e6`](https://github.com/octobercms/october/commit/f9f337e6646d60c689d3f56595b2227b3df248cf))
 - Disable theme config cache when debug mode enabled ([october@`6f583b39`](https://github.com/octobercms/october/commit/6f583b392077e31fbdd7566634ec65515bfbc98a))
 - Fix code quality errors in Lists widget ([october@`be2a8507`](https://github.com/octobercms/october/commit/be2a850787d5564445b3c946f20415e0ab22b208))
 - Increment column count when tree is shown ([october@`c1dcc625`](https://github.com/octobercms/october/commit/c1dcc6255914d3fd216165579e0a067d6f816803))
@@ -60,7 +65,6 @@ We would like to thank the following people for their contributions to this rele
 - **@ayumihamsaki**
 - **@bennothommo**
 - **@daftspunk**
-- **@DanHarrin**
 - **@fansaien**
 - **@gergo85**
 - **@LarBearrr**
