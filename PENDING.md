@@ -48,6 +48,7 @@
 - Use temporaryUrls for protected files if the storage driver supports them.  ([october#4358](https://github.com/octobercms/october/pull/4358))
 - Compile rich editor with inline style and class ([october#4449](https://github.com/octobercms/october/pull/4449))
 - Database layer for the CMS objects ([october#3908](https://github.com/octobercms/october/pull/3908))
+- Add is_countable polyfill ([library#413](https://github.com/octobercms/library/pull/413))
 - Fixed support for Auth::id() ([library#412](https://github.com/octobercms/library/pull/412))
 - Fix: Don't minify css rules inside parentheses ([library#411](https://github.com/octobercms/library/pull/411))
 - Don't minify css rules inside parentheses ([library#411](https://github.com/octobercms/library/pull/411))
@@ -56,6 +57,8 @@
 - Various improvements to File handling logic.  ([library#406](https://github.com/octobercms/library/pull/406))
 
 ## Other changes
+- Translate Inspector option titles ([october@`c04b7fae`](https://github.com/octobercms/october/commit/c04b7faecc982dcc0d5e75c4e06dc320b8081581))
+- Add helper for including hidden files ([library@`1892924d`](https://github.com/octobercms/library/commit/1892924d3acd7f9f1f342c0310c1ff0b770b4f10))
 - minor code cleanup ([library@`3e6f66cf`](https://github.com/octobercms/library/commit/3e6f66cfafe9d09f45594cda87744531b410386d))
 - Improve error message when not using directories in custom Halcyon models. ([library@`0b50bb4e`](https://github.com/octobercms/library/commit/0b50bb4ef6f2294def6f9191808f16a95effacc0))
 
