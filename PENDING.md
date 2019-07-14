@@ -4,6 +4,7 @@
 - Halcyon DbDatasource ([library#356](https://github.com/octobercms/library/pull/356))
 
 ## API and Feature Changes
+- Improved Brazilian Portuguese translations ([october#4450](https://github.com/octobercms/october/pull/4450))
 - Missing Spanish Translations ([october#4448](https://github.com/octobercms/october/pull/4448))
 - Update zh-cn/lang.php file ([october#4447](https://github.com/octobercms/october/pull/4447))
 - Fix typo ([october#4449](https://github.com/octobercms/october/pull/4449))
